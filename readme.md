@@ -17,6 +17,7 @@ Table of contents
    * [Dependencies](#dependencies)
    * [Installation](#installation)
    * [Configuration](#configuration)
+      * [Consent](#gdpr-consent)
       * [Portability](#portability)
       * [Anonymizability](#anonymizability)
       * [Automatic anonymization](#automatic-anonymization-of-inactive-users)
@@ -74,7 +75,7 @@ To add the agreement functionality:
     ```php
         Route::group(['middleware' => ['auth', 'gdpr.terms']], function () {
            Route::get('/', 'HomeController@index');
-        }
+        });
     ```
 4. Change the Agreement text to your particular needs in `resources/views/gdpr/message.blade.php`
 
