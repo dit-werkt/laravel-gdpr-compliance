@@ -2,6 +2,8 @@
 
 namespace Dialect\Gdpr;
 
+use Illuminate\Support\Facades\Crypt;
+
 trait EncryptsAttributes
 {
     /**
@@ -39,5 +41,32 @@ trait EncryptsAttributes
         }
 
         parent::setAttribute($key, $value);
+    }
+
+    /**
+     * Return Model in array type, with all datas decrypted.
+     * @return array
+     */
+    public function decryptToArray()
+    {
+        $model=[];
+        foreach ($this->attributes as $attributeKey => $attributeValue) {
+            $model[$attributeKey]=$this->$attributeKey;
+        }
+        return $model;
+    }
+
+
+    /**
+     * Return Model in collection type, with all datas decrypted.
+     * @return array
+     */
+    public function decryptToCollection()
+    {
+        $model = collect();
+        foreach ($this->attributes as $attributeKey => $attributeValue) {
+            $model->$attributeKey = $this->$attributeKey;
+        }
+        return $model;
     }
 }
