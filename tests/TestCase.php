@@ -34,6 +34,13 @@ class TestCase extends \Orchestra\Testbench\TestCase
      */
     protected $customer;
 
+     /**
+     * A dummy user model.
+     *
+     * @var customer
+     */
+    protected $user;
+
     /**
      * A dummy order model.
      *
@@ -49,13 +56,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
     protected function setUp()
     {
         parent::setUp();
-
         $this->loadLaravelMigrations();
         $this->runTestMigrations();
 
         $this->product = Product::create()->fresh();
         $this->shipment = Shipment::create(['product_id' => $this->product->id])->fresh();
-        $this->customer = Customer::create()->fresh();
+        $this->customer = Customer::create(['name' => 'TestUser', 'email' => 'test@email.com', 'adress' => '30 test adress']);
         $this->order = Order::create(['product_id' => $this->product->id, 'customer_id' => $this->customer->id]);
     }
 
@@ -106,6 +112,8 @@ class TestCase extends \Orchestra\Testbench\TestCase
             $schema->create('customers', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name')->nullable();
+                $table->string('email');
+                $table->string('adress');
                 $table->timestamps();
             });
         }
@@ -198,8 +206,9 @@ class Customer extends Model
     protected $guarded = [];
     protected $table = 'customers';
     protected $gdprWith = ['orders'];
-
-    use Anonymizable;
+    protected $encrypted = ['name', 'email', 'adress'];
+ 
+    use Anonymizable, EncryptsAttributes;
 
     protected $gdprAnonymizableFields = ['name' => 'Anonymized User'];
 
