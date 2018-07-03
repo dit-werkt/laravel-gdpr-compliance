@@ -336,7 +336,12 @@ class User extends Model
 }
 
 ```
+If all fields are encrypted, the model can be returned in decrypted state as an array or collection:
+```php
+$decryptedArray = $this->decryptToArray();
 
+$decryptedCollection = $this->customer->decryptToCollection();
+```
 ### Anonymization
 
 To anonymize a model you call `anonymize()` on it:
