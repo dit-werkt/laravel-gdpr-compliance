@@ -2,14 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::post('download', 'GdprController@download');
+Route::post('download', '\Dialect\Gdpr\Http\Controllers\GdprController@download');
 
-Route::get('/show_terms', 'GdprController@showTerms');
+Route::get('/show_terms', '\Dialect\Gdpr\Http\Controllers\GdprController@showTerms');
 Route::post('terms_accepted', [
     'as' => 'terms_accepted',
-    'uses' => 'GdprController@termsAccepted',
+    'uses' => '\Dialect\Gdpr\Http\Controllers\GdprController@termsAccepted',
 ]);
 Route::post('terms_denied', [
     'as' => 'terms_denied',
-    'uses' => 'GdprController@termsDenied',
+    'uses' => '\Dialect\Gdpr\Http\Controllers\GdprController@termsDenied',
 ]);

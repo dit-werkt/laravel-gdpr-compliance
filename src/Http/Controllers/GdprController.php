@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Dialect\Gdpr\Http\Controllers;
 
 use App\User;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Dialect\Gdpr\Http\Requests\GdprDownload;
 
-class GdprController extends BaseController
+class GdprController extends Controller
 {
     /**
      * Download the GDPR compliant data portability JSON file.
