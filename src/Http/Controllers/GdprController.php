@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Dialect\Gdpr\Http\Controllers;
 
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Dialect\Gdpr\Http\Requests\GdprDownload;
+use App\Http\Controllers\Controller;
 
 class GdprController extends Controller
 {
