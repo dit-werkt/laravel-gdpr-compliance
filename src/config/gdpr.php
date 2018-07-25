@@ -48,9 +48,9 @@ return [
     | String
     |--------------------------------------------------------------------------
     |
-    | This is the default string the fields will change to
+    | This is the default string the anonymized fields will change to.
     |
-    |d
+    |
     */
 
     'string' => [
