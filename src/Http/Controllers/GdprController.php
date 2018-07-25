@@ -6,7 +6,7 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Dialect\Gdpr\Http\Requests\GdprDownload;
 
-class GdprController extends BaseController
+class GdprController extends Controller
 {
     /**
      * Download the GDPR compliant data portability JSON file.
