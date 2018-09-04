@@ -1,6 +1,6 @@
 <?php
 
-namespace Dialect\Gdpr\Http\Controllers;
+namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Routing\Controller;
