@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLastActivityAndAcceptedGdprToUsersTable extends Migration
+class AddGdprToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddLastActivityAndAcceptedGdprToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->datetime('last_activity')->nullable()->default(null);
+            $table->dateTime('last_activity')->nullable()->default(null);
             $table->boolean('accepted_gdpr')->nullable()->default(null);
             $table->boolean('isAnonymized')->default(false);
         });

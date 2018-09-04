@@ -23,6 +23,7 @@ class GdprServiceProvider extends ServiceProvider
             __DIR__.'/migrations/add_gdpr_to_users_table.php' => database_path('migrations/'.$timestamp.'_add_gdpr_to_users_table.php'),
             __DIR__.'/views/message.blade.php' => base_path('resources/views/gdpr/message.blade.php'),
             __DIR__.'/middleware/RedirectIfUnansweredTerms.php' => base_path('app/Http/Middleware/RedirectIfUnansweredTerms.php'),
+	        __DIR__.'/Http/Controllers/GdprController.php' => base_path('app/Http/Controllers/GdprController.php')
         ], 'gdpr-consent');
     }
 
@@ -35,7 +36,7 @@ class GdprServiceProvider extends ServiceProvider
     {
         Route::group([
             'prefix' => config('gdpr.uri'),
-            'namespace' => 'Dialect\Gdpr\Http\Controllers',
+            'namespace' => 'App\Http\Controllers',
             'middleware' => config('gdpr.middleware'),
         ], function () {
             $this->loadRoutesFrom(__DIR__.'/routes/web.php');

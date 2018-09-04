@@ -40,7 +40,7 @@ class GdprController extends Controller
      */
     public function showTerms()
     {
-        return view('users.gdpr');
+        return view('gdpr.message');
     }
 
     /**
