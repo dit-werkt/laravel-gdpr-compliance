@@ -83,30 +83,28 @@ To add the agreement functionality:
 Add the `Portable` trait to the model model you want to be able to port:
 
 ```php
-    namespace App;
-    
-    use Dialect\Gdpr\Portable;
-    
-    class User extends Model
-    {
-        use Portable;
-    }
+namespace App;
 
+use Dialect\Gdpr\Portable;
+
+class User extends Model
+{
+    use Portable;
+}
 ```
 
 #### Anonymizability
 Add the `Anonymizable` trait to the model you want to be able to anonymize:
 
 ```php
-    namespace App;
-    
-    use Dialect\Gdpr\Anonymizable;
-    
-    class User extends Model
-    {
-        use Anonymizable;
-    }
+namespace App;
 
+use Dialect\Gdpr\Anonymizable;
+
+class User extends Model
+{
+    use Anonymizable;
+}
 ```
 
 #### Automatic Anonymization of inactive users
@@ -128,7 +126,7 @@ To activate this feature:
             \App\Console\Commands\AnonymizeInactiveUsers::class,
         ];
     ```
-   
+
 ### Configuring Anonymizable Data
 
 On the model, set `gdprAnonymizableFields` by adding the fields you want to anonymize on the model, 
@@ -137,45 +135,44 @@ you can also set up attribute-like functions on your model to supply replacement
  If no value is supplied, 
 a default string from settings will be used.
 ```php
-    /**
-     * Using the default string from config.
-     */
+/**
+ * Using the default string from config.
+ */
+protected $gdprAnonymizableFields = [
+    'name', 
+    'email'
+];
+```
+```php
+/**
+ * Using replacement strings.
+ */
+protected $gdprAnonymizableFields = [
+    'name' => 'Anonymized User', 
+    'email' => 'anonymous@mail.com'
+];
+```
+```php
+namespace App;
+
+use Dialect\Gdpr\Anonymizable;
+
+class User extends Model
+{
+    use Anonymizable;
+
     protected $gdprAnonymizableFields = [
-        'name', 
         'email'
     ];
-```
-```php
+    
     /**
-     * Using replacement strings.
-     */
-    protected $gdprAnonymizableFields = [
-    	'name' => 'Anonymized User', 
-        'email' => 'anonymous@mail.com'
-    ];
-```
-```php
-    namespace App;
-    
-    use Dialect\Gdpr\Anonymizable;
-    
-    class User extends Model
+    * Using getAnonynomized{column} to return anonymizable data
+    */
+    public function getAnonynomizedEmail()
     {
-        use Anonymizable;
-        
-        protected $gdprAnonymizableFields = [
-            'email'
-        ];
-        
-        /**
-        * Using getAnonynomized{column} to return anonymizable data
-        */
-        public function getAnonynomizedEmail()
-        {
-            return random_bytes(10);
-        }
+        return random_bytes(10);
     }
-
+}
 ```
 
 
@@ -186,7 +183,7 @@ add the related models to `$gdprWith`. On the related models. add the `Anonymiza
 class Order extends Model
 {
     use Anonymizable;
-		
+
 	protected $guarded = [];
 	protected $table = 'orders';
 	protected $gdprWith = ['product'];
@@ -336,7 +333,12 @@ class User extends Model
 }
 
 ```
+If all fields are encrypted, the model can be returned in decrypted state as an array or collection:
+```php
+$decryptedArray = $this->decryptToArray();
 
+$decryptedCollection = $this->customer->decryptToCollection();
+```
 ### Anonymization
 
 To anonymize a model you call `anonymize()` on it:
