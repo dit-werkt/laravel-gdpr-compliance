@@ -123,7 +123,7 @@ To activate this feature:
 
     ```php
         protected $commands = [
-            \App\Console\Commands\AnonymizeInactiveUsers::class,
+            \Dialect\Gdpr\Commands\AnonymizeInactiveUsers::class,
         ];
     ```
 
