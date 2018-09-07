@@ -77,7 +77,15 @@ To add the agreement functionality:
            Route::get('/', 'HomeController@index');
         });
     ```
-4. Change the Agreement text to your particular needs in `resources/views/gdpr/message.blade.php`
+4. Add the fields to `$fillable` in the User model:
+    ```php
+        protected $fillable = [
+            'last_activity',
+            'accepted_gdpr',
+            'isAnonymized'
+        ];
+    ```
+5. Change the Agreement text to your particular needs in `resources/views/gdpr/message.blade.php`
 
 #### Portability
 Add the `Portable` trait to the model model you want to be able to port:
