@@ -63,7 +63,7 @@ until the user has agreed to the new terms.
 To add the agreement functionality:
 
 1. Publish the middleware: <br>
-    `php artisan vendor:publish --provider="Dialect\Gdpr\GdprServiceProvider" --tag=gdpr-consent`
+    `php artisan vendor:publish --provider="Dialect\Gdpr\GdprServiceProvider"`
 2. Add `'gdpr.terms' => \App\Http\Middleware\RedirectIfUnansweredTerms::class` <br>
     to the `$routeMiddleware` middlewaregroup in `app/Http/Kernel` like so: <br>
     ```php
