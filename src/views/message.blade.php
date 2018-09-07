@@ -33,7 +33,7 @@
                             <div class="col-6">
                                 <div class="form-group float-right">
                                     <form class="form-inline float-left" role="form" method="POST"
-                                          action="{{ route('gdpr-terms-_denied') }}">
+                                          action="{{ route('gdpr-terms-denied') }}">
                                         {{ csrf_field() }}
                                         <button type="submit" class="btn btn-outline-danger">Deny</button>
                                     </form>
