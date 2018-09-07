@@ -4,7 +4,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('download', 'GdprController@download');
 
-Route::get('/terms', 'GdprController@showTerms');
+Route::get('/terms', [
+    'as' => 'terms',
+    'uses' => 'GdprController@showTerms',
+]);
 Route::post('terms/accepted', [
     'as' => 'terms_accepted',
     'uses' => 'GdprController@termsAccepted',
