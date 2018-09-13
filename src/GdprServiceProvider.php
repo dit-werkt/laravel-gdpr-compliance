@@ -93,7 +93,7 @@ class GdprServiceProvider extends ServiceProvider
         $this->app->singleton('dialect.gdpr.console.kernel', function ($app) {
             $dispatcher = $app->make(\Illuminate\Contracts\Events\Dispatcher::class);
 
-            return new console\Kernel($app, $dispatcher);
+            return new \dialect\gdpr\console\Kernel($app, $dispatcher);
         });
 
         $this->app->make('dialect.gdpr.console.kernel');
