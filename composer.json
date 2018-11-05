@@ -6,7 +6,7 @@
     "homepage": "https://github.com/dialect-katrineholm/laravel-gdpr-compliance",
     "require": {
         "php": ">=7.0",
-        "illuminate/support": "5.5.x|5.6.x"
+        "illuminate/support": ">=5.5"
     },
     "require-dev": {
         "orchestra/testbench": "~3.0"
