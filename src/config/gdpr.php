@@ -41,6 +41,7 @@ return [
 
     'settings' => [
         'ttl' => 12,
+        'user_model_fqn' => \App\User::class, // Fully qualified namespace of the User model
     ],
 
     /*
