@@ -42,6 +42,9 @@ class AnonymizeInactiveUsers extends Command
 
         foreach ($anonymizableUsers as $user) {
             $user->anonymize();
+            $user->update([
+                  'isAnonymized' => true,
+            ]);
         }
     }
 }
