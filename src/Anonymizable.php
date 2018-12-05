@@ -63,7 +63,7 @@ trait Anonymizable
     {
         if ($item instanceof \Closure) {
             $value = \call_user_func($item());
-        } elseif ($item == null) {
+        } elseif ($item == null || is_int($item) || is_string($item)) {
             $value = $item;
         } else {
             $value = config('gdpr.string.default');
