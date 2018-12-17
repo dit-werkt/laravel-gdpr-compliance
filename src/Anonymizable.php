@@ -47,7 +47,9 @@ trait Anonymizable
                         $collection = [$collection];
                     }
                     foreach ($collection as $item) {
-                        $item->anonymize($modelChecker);
+                        if (isset($item)) {
+                            $item->anonymize($modelChecker);
+                        }
                     }
                 }
             }
