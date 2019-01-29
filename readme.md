@@ -172,9 +172,9 @@ class User extends Model
     ];
     
     /**
-    * Using getAnonynomized{column} to return anonymizable data
+    * Using getAnonymized{column} to return anonymizable data
     */
-    public function getAnonynomizedEmail()
+    public function getAnonymizedEmail()
     {
         return random_bytes(10);
     }
