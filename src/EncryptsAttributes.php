@@ -50,7 +50,7 @@ trait EncryptsAttributes
         $model = parent::toArray();
 
         foreach ($model as $key => $value) {
-            if(in_array($key, $this->encrypted) && ! is_null($value)) {
+            if (in_array($key, $this->encrypted) && ! is_null($value)) {
                 $model[$key] = decrypt($model[$key]);
             }
         }
@@ -67,4 +67,3 @@ trait EncryptsAttributes
         return collect($this->decryptToArray());
     }
 }
-
