@@ -47,9 +47,12 @@ trait EncryptsAttributes
      */
     public function decryptToArray()
     {
-        $model = [];
-        foreach ($this->attributes as $attributeKey => $attributeValue) {
-            $model[$attributeKey] = $this->$attributeKey;
+        $model = parent::toArray();
+
+        foreach ($model as $key => $value) {
+            if (in_array($key, $this->encrypted) && ! is_null($value)) {
+                $model[$key] = decrypt($model[$key]);
+            }
         }
 
         return $model;
@@ -61,11 +64,6 @@ trait EncryptsAttributes
      */
     public function decryptToCollection()
     {
-        $model = collect();
-        foreach ($this->attributes as $attributeKey => $attributeValue) {
-            $model->$attributeKey = $this->$attributeKey;
-        }
-
-        return $model;
+        return collect($this->decryptToArray());
     }
 }
