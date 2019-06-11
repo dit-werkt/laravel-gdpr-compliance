@@ -2,6 +2,8 @@
 
 namespace Dialect\Gdpr;
 
+use Illuminate\Support\Facades\Crypt;
+
 trait EncryptsAttributes
 {
     /**
@@ -10,13 +12,28 @@ trait EncryptsAttributes
      * @param  string  $key
      * @return mixed
      */
-    public function getAttributeValue($key)
+    public function getAttribute($key)
     {
-        $value = parent::getAttributeValue($key);
+        $value = parent::getAttribute($key);
 
-        if (in_array($key, $this->encrypted) &&
-            ! is_null($value)) {
-            return decrypt($value);
+        if (in_array($key, $this->encrypted ?? [])) {
+            $value = $this->decryptValue($value);
+        }
+
+        return $value;
+    }
+
+    /**
+     * Decrypts a value only if it is not null and not empty.
+     *
+     * @param $value
+     *
+     * @return mixed
+     */
+    protected function decryptValue($value)
+    {
+        if ($value !== null && ! empty($value)) {
+            return Crypt::decrypt($value);
         }
 
         return $value;
@@ -33,12 +50,28 @@ trait EncryptsAttributes
         $key,
         $value
     ) {
-        if (in_array($key, $this->encrypted) &&
-            ! is_null($value)) {
-            $value = encrypt($value);
+        if ($value !== null && in_array($key, $this->encrypted ?? [])) {
+            $value = Crypt::encrypt($value);
         }
 
-        parent::setAttribute($key, $value);
+        return parent::setAttribute($key, $value);
+    }
+
+    /**
+     * Return Model in array type, with all datas decrypted.
+     * @return array
+     */
+    public function attributesToArray()
+    {
+        $attributes = parent::attributesToArray();
+
+        foreach ($this->encrypted ?? [] as $key) {
+            if (isset($attributes[$key])) {
+                $attributes[$key] = $this->decryptValue($attributes[$key]);
+            }
+        }
+
+        return $attributes;
     }
 
     /**
@@ -48,7 +81,6 @@ trait EncryptsAttributes
     public function decryptToArray()
     {
         $model = parent::toArray();
-
         foreach ($model as $key => $value) {
             if (in_array($key, $this->encrypted) && ! is_null($value)) {
                 $model[$key] = decrypt($model[$key]);
@@ -64,6 +96,6 @@ trait EncryptsAttributes
      */
     public function decryptToCollection()
     {
-        return collect($this->decryptToArray());
+        return collect($this->attributesToArray());
     }
 }
