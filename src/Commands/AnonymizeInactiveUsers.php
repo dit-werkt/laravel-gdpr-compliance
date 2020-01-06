@@ -37,6 +37,10 @@ class AnonymizeInactiveUsers extends Command
      */
     public function handle()
     {
+        if(!config('gdpr.enabled')) {
+            return;
+        }
+
         $model = config('gdpr.settings.user_model_fqn', 'App\User');
         $user = new $model();
         $anonymizableUsers = $user::where('last_activity', '!=', null)->where('isAnonymized', 0)->where('last_activity', '<=', carbon::now()->subMonths(config('gdpr.settings.ttl')))->get();
