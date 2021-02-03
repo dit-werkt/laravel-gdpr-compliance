@@ -4,6 +4,7 @@ namespace Dialect\Gdpr;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 trait Anonymizable
 {
@@ -41,8 +42,13 @@ trait Anonymizable
             $this->loadMissing($this->gdprWith);
             // Recursively update all related models
             foreach ($this->getRelations() as $relationName => $collection) {
+                if ($collection instanceof Pivot) {
+                    // ignore pivot relationships.
+                    continue;
+                }
                 if (! array_key_exists($relationName, $modelChecker)) {
                     array_push($modelChecker, $relationName);
+
                     if (! ($collection instanceof Collection)) {
                         $collection = [$collection];
                     }
